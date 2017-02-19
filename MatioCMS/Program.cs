@@ -14,7 +14,7 @@ namespace MatioCMS
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
+                .UseSetting("detailedErrors", "true")
                 .UseStartup<Startup>()
                 .Build();
 

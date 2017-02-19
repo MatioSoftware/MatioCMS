@@ -24,10 +24,16 @@ namespace MatioCMS
         #region Fields
             private DB DB;
             private Library library;
+            private memory mem;
         #endregion
 
         #region Classes
-            private class 
+            private class memory
+            {
+                public List<Func<string, string>> headfilters { get; set; } = new List<Func<string, string>>();
+
+                public List<Func<CMS, Microsoft.AspNetCore.Mvc.ContentResult>> extensions = new List<Func<CMS, Microsoft.AspNetCore.Mvc.ContentResult>>();
+            }
         #endregion
     }
 
@@ -36,4 +42,6 @@ namespace MatioCMS
         public string Name { get; set; }
         public string Value { get; set; }
     }
+
+
 }

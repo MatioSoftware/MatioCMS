@@ -98,8 +98,9 @@ namespace MatioCMS
 
                 // Extension
                 routes.MapRoute(
-                    name: "",
-                    template: ""
+                    name: "Extension",
+                    template: "ext/{name}",
+                    defaults: new { controller = "Content", action = "Extension" }
                     );
             });
         }

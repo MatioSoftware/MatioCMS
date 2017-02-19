@@ -35,6 +35,7 @@ namespace MatioCMS.Database
             public IEnumerable<Config> Config { get; private set; }
             public DbSet<Stat> Statistics { get; set; }
             public IEnumerable<Plugin> Plugins { get; private set; }
+            
         #endregion
     }
 }
