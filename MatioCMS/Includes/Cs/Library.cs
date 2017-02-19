@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 namespace MatioCMS.Database
 {
     /// <summary>
-    /// Code library model
+    /// Library model
     /// </summary>
     public class Library
     {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using MatioCMS.Includes;
 
 namespace MatioCMS.Database
 {
@@ -31,9 +32,9 @@ namespace MatioCMS.Database
         }
 
         #region Properties
-
-            
-
+            public IEnumerable<Config> Config { get; private set; }
+            public DbSet<Stat> Statistics { get; set; }
+            public IEnumerable<Plugin> Plugins { get; private set; }
         #endregion
     }
 }
