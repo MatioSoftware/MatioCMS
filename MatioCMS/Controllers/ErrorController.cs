@@ -11,9 +11,9 @@ namespace MatioCMS.Controllers
     public class ErrorController : Controller
     {
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult Index(int status)
         {
-            return View();
+            return Content($"HTTP {status}");
         }
     }
 }

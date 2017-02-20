@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 
 namespace MatioCMS
@@ -47,10 +49,14 @@ namespace MatioCMS
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Error/InternalServer");
             }
-
-            app.UseStaticFiles();
+            app.UseStatusCodePagesWithReExecute("/Error/?status={0}");
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = env.ContentRootFileProvider,
+                RequestPath = new Microsoft.AspNetCore.Http.PathString("/static")
+            });
 
             app.UseMvc(routes =>
             {
@@ -63,37 +69,13 @@ namespace MatioCMS
                 // Page
                 routes.MapRoute(
                     name: "Page",
-                    template: "page/{name}",
-                    defaults: new { controller = "Content", action = "Page" });
-                routes.MapRoute(
-                    name: "Page-param1",
-                    template: "page/{name}/{param1}",
-                    defaults: new { controller = "Content", action = "Page" });
-                routes.MapRoute(
-                    name: "Page-param2",
-                    template: "page/{name}/{param1}/{param2}",
-                    defaults: new { controller = "Content", action = "Page" });
-                routes.MapRoute(
-                    name: "Page-param3",
-                    template: "page/{name}/{param1}/{param2}/{param3}",
-                    defaults: new { controller = "Content", action = "Page" });
-                routes.MapRoute(
-                    name: "Page-param4",
-                    template: "page/{name}/{param1}/{param2}/{param3}/{param4}",
-                    defaults: new { controller = "Content", action = "Page" });
-                routes.MapRoute(
-                    name: "Page-param5",
-                    template: "page/{name}/{param1}/{param2}/{param3}/{param4}/{param5}",
+                    template: "page/{*arguments}", // example: page/name1/name2/name3/1
                     defaults: new { controller = "Content", action = "Page" });
 
                 // Post
                 routes.MapRoute(
                     name: "Post",
-                    template: "news/{name}",
-                    defaults: new { controller = "Content", action = "Post" });
-                routes.MapRoute(
-                    name: "Post-param1",
-                    template: "post/{name}/{pagenumber:uint}",
+                    template: "news/{name}/{pagenumber?}",
                     defaults: new { controller = "Content", action = "Post" });
 
                 // Archive
@@ -103,14 +85,57 @@ namespace MatioCMS
                     defaults: new { controller = "Content", action = "Archive" }
                     );
                 routes.MapRoute(
+                    name: "Archive-y-pagenumber",
+                    template: @"archive/{year:regex([12]\d{3})}/page/{pagenumber:ushort}",
+                    defaults: new { controller = "Content", action = "Archive" }
+                    );
+                routes.MapRoute(
                     name: "Archive-ym",
                     template: @"archive/{year:regex([12]\d{3})}/{month:regex([01]\d)}",
+                    defaults: new { controller = "Content", action = "Archive" }
+                    );
+                routes.MapRoute(
+                    name: "Archive-ym-pagenumber",
+                    template: @"archive/{year:regex([12]\d{3})}/{month:regex([01]\d)}/page/{pagenumber:ushort}",
                     defaults: new { controller = "Content", action = "Archive" }
                     );
                 routes.MapRoute(
                     name: "Archive-ymd",
                     template: @"archive/{year:regex([12]\d{3})}/{month:regex([01]\d)}/{day:regex([0-3]\d)}",
                     defaults: new { controller = "Content", action = "Archive" }
+                    );
+                routes.MapRoute(
+                    name: "Archive-ymd-pagenumber",
+                    template: @"archive/{year:regex([12]\d{3})}/{month:regex([01]\d)}/{day:regex([0-3]\d)}/page/{pagenumber:ushort}",
+                    defaults: new { controller = "Content", action = "Archive" }
+                    );
+
+                // Category
+                routes.MapRoute(
+                    name: "Category",
+                    template: "category/{name}/{pagenumber?}",
+                    defaults: new { controller = "Content", action = "Category" }
+                    );
+
+                // Tag
+                routes.MapRoute(
+                    name: "Tag",
+                    template: "tag/{name}/{pagenumber?}",
+                    defaults: new { controller = "Content", action = "Tag" }
+                    );
+
+                // Taxonomy
+                routes.MapRoute(
+                    name: "Taxonomy",
+                    template: "tax-{taxonomy}/",
+                    defaults: new { controller = "Content", action = "Taxonomy" }
+                    );
+
+                // Term
+                routes.MapRoute(
+                    name: "Term",
+                    template: "tax-{taxonomy}/{term}/{pagenumber?}",
+                    defaults: new { controller = "Content", action = "Term" }
                     );
 
                 // Extension
@@ -120,7 +145,19 @@ namespace MatioCMS
                     defaults: new { controller = "Content", action = "Extension" }
                     );
 
+                // Error: Not Found
+                routes.MapRoute(
+                    name: "Error-NotFound",
+                    template: "error/notfound",
+                    defaults: new { controller = "Error", action = "NotFound" }
+                    );
 
+                // Error: Internal Server Error
+                routes.MapRoute(
+                    name: "Error-InternalServer",
+                    template: "error/internalserver",
+                    defaults: new { controller = "Error", action = "InternalServer" }
+                    );
             });
         }
     }
