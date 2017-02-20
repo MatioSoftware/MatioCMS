@@ -33,6 +33,10 @@ namespace MatioCMS
                 public List<Func<string, string>> headfilters { get; set; } = new List<Func<string, string>>();
 
                 public List<Func<CMS, Microsoft.AspNetCore.Mvc.ContentResult>> extensions = new List<Func<CMS, Microsoft.AspNetCore.Mvc.ContentResult>>();
+
+                public List<Func<string, string>> contentfilters = new List<Func<string, string>>();
+
+                
             }
         #endregion
     }

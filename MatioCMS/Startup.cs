@@ -96,12 +96,31 @@ namespace MatioCMS
                     template: "post/{name}/{pagenumber:uint}",
                     defaults: new { controller = "Content", action = "Post" });
 
+                // Archive
+                routes.MapRoute(
+                    name: "Archive-y",
+                    template: @"archive/{year:regex([12]\d{3})}",
+                    defaults: new { controller = "Content", action = "Archive" }
+                    );
+                routes.MapRoute(
+                    name: "Archive-ym",
+                    template: @"archive/{year:regex([12]\d{3})}/{month:regex([01]\d)}",
+                    defaults: new { controller = "Content", action = "Archive" }
+                    );
+                routes.MapRoute(
+                    name: "Archive-ymd",
+                    template: @"archive/{year:regex([12]\d{3})}/{month:regex([01]\d)}/{day:regex([0-3]\d)}",
+                    defaults: new { controller = "Content", action = "Archive" }
+                    );
+
                 // Extension
                 routes.MapRoute(
                     name: "Extension",
                     template: "ext/{name}",
                     defaults: new { controller = "Content", action = "Extension" }
                     );
+
+
             });
         }
     }
