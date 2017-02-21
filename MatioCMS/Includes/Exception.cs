@@ -18,4 +18,18 @@ namespace MatioCMS
         public ConfigFileNotFoundException(string message) : base(message) { }
         public ConfigFileNotFoundException(string message, Exception innerException) : base(message, innerException) { }
     }
+
+    public class AdminException : ApplicationException
+    {
+        public AdminException() : base() { }
+        public AdminException(string message) : base(message) { }
+        public AdminException(string message, Exception innerException) : base(message, innerException) { }
+    }
+
+    public class AdminLoginException : AdminException
+    {
+        public AdminLoginException() : base() { }
+        public AdminLoginException(string message) : base(message) { }
+        public AdminLoginException(string message, Exception innerException) : base(message, innerException) { }
+    }
 }

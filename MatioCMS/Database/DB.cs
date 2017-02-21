@@ -11,7 +11,7 @@ namespace MatioCMS.Database
     /// <summary>
     /// Database Connection for anonymous use (readonly)
     /// </summary>
-    public sealed class DB : DbContext
+    public class DB : DbContext
     {
         /// <param name="RootPath">Webpage root path</param>
         public DB(string RootPath)

@@ -35,6 +35,21 @@
                     }
                 ]
             ]
+        },
+        {
+            "Zone": "Admin",
+            "Items": [
+                [
+                    {
+                        "Language": "en",
+                        "Value": "Login data is incorrect."
+                    },
+                    {
+                        "Language": "pl",
+                        "Value": "Dane logowania są niepoprawne."
+                    }
+                ]
+            ]
         }
     ]
 }

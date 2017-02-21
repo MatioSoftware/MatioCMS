@@ -66,9 +66,9 @@ namespace MatioCMS.Database
                 return list2.Where(item => item.Language == this.lang).First().Value;
         }
 
-        public List<TranslationZone> Titles { get; private set; }
+        private List<TranslationZone> Titles { get; set; }
 
-        public List<TranslationZone> Messages { get; private set; }
+        private List<TranslationZone> Messages { get; set; }
 
         private class jsonobject
         {
