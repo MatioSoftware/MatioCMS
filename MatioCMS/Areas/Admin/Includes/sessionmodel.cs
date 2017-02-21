@@ -7,8 +7,8 @@ namespace MatioCMS.Areas.Admin.Includes
 {
     public class sessionmodel
     {
-        [Key]
-        public string ID { get; set; }
+        [Key,Required]
+        public Guid ID { get; set; }
         public DateTime TimeAdded { get; set; }
         public string Data { get; set; }
     }
