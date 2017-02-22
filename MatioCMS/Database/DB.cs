@@ -31,10 +31,17 @@ namespace MatioCMS.Database
             optionsBuilder.UseSqlServer(JsonConvert.DeserializeObject<string>(new StreamReader(json).ReadToEnd()));
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("matiocms");
+        }
+
         #region Properties
+            public IEnumerable<Admin> Admins { get; private set; }
             public IEnumerable<Config> Config { get; private set; }
             public DbSet<Stat> Statistics { get; set; }
             public IEnumerable<Plugin> Plugins { get; private set; }
+            public 
             
         #endregion
     }

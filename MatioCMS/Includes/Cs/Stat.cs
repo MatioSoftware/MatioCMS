@@ -1,13 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MatioCMS.Includes
 {
+    [Table("Statistics")]
     public class Stat
     {
-        public DateTime Date { get; set; }
+        [Key, DataType(DataType.Date),ConcurrencyCheck]
+        public DateTime Date { get; set; } = DateTime.UtcNow.Date;
+        [DefaultValue(0)]
         public uint Views { get; set; }
     }
 }

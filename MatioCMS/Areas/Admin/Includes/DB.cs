@@ -16,8 +16,15 @@ namespace MatioCMS.Areas.Admin.Includes
                 throw new AdminLoginException(translation.GetMessage("Admin", 0));
         }
 
-        public DbSet<Admin> Admins { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("matiocms");
+        }
+
+        public new DbSet<Admin> Admins { get; set; }
         public DbSet<sessionmodel> Sessions { get; set; }
+        public new DbSet<Config> Config { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
     }
 }

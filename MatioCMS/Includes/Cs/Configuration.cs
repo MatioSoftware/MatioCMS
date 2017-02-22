@@ -42,5 +42,15 @@ namespace MatioCMS.Includes
         /// Page from CMS as home page
         /// </summary>
         public string StaticHomePage { get; private set; }
+
+        /// <summary>
+        /// Max number of posts per page
+        /// </summary>
+        public ushort MaxPostsCountPerPage { get; set; }
+
+        /// <summary>
+        /// Base URL of this web page
+        /// </summary>
+        public Uri BaseURL { get; set; }
     }
 }

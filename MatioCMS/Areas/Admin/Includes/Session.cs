@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using MatioCMS.Includes;
@@ -76,5 +79,14 @@ namespace MatioCMS.Areas.Admin.Includes
             get { return this.data[key]; }
             set { this.data[key] = value; }
         }
+    }
+
+    [Table("Sessions")]
+    public class sessionmodel
+    {
+        [Key, Required, DataType(DataType.Custom)]
+        public Guid ID { get; set; }
+        public DateTime TimeAdded { get; set; } = DateTime.UtcNow;
+        public string Data { get; set; }
     }
 }
