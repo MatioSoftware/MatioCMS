@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MatioCMS.Areas.Admin.Includes
 {
-    [Table("adminstartpage")]
+    [Table("adminstartpages")]
     public class adminstartpage
     {
         [Key,ConcurrencyCheck,DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -25,6 +25,6 @@ namespace MatioCMS.Areas.Admin.Includes
         public DbSet<sessionmodel> Sessions { get; set; }
         public new DbSet<Config> Config { get; set; }
         public DbSet<Log> Logs { get; set; }
-
+        public DbSet<adminstartpage> adminstartpages { get; set; }
     }
 }
