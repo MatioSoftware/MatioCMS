@@ -84,7 +84,7 @@ namespace MatioCMS.Areas.Admin.Includes
     [Table("Sessions")]
     public class sessionmodel
     {
-        [Key, Required, DataType(DataType.Custom)]
+        [Key, Required]
         public Guid ID { get; set; }
         public DateTime TimeAdded { get; set; } = DateTime.UtcNow;
         public string Data { get; set; }

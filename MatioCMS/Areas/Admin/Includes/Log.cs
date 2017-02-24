@@ -24,5 +24,5 @@ namespace MatioCMS.Areas.Admin.Includes
         public Admin Admin { get; set; }
     }
     public enum ObjectTypes { Admin, Page, Post, Category, Tag, Snippet, Link, Menu, Theme, Plugin, Gallery }
-    public enum Action { Default, Add, Delete, Edit, Personalize, Publish, Install }
+    public enum Actions { Default, Add, Delete, Edit, Personalize, Publish, Install }
 }

@@ -111,7 +111,14 @@ namespace MatioCMS.Includes.Models
     [Table("Widgets")]
     public class Widget
     {
-
+        [Key, ConcurrencyCheck, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+        [Required]
+        public string WidgetName { get; set; }
+        public string AreaName { get; set; }
+        [DefaultValue(0)]
+        public byte PlaceNumber { get; set; }
+        public string Settings { get; set; }
     }
     #endregion
 }

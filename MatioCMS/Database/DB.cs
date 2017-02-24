@@ -60,6 +60,10 @@ namespace MatioCMS.Database
 
             // Themes
             modelBuilder.Entity<Theme>().Property("Name").IsUnicode(false);
+
+            // Widgets
+            modelBuilder.Entity<Widget>().Property("WidgetName").IsUnicode(false);
+            modelBuilder.Entity<Widget>().Property("AreaName").IsUnicode(false);
         }
 
         #region Properties
@@ -71,6 +75,7 @@ namespace MatioCMS.Database
             public DbSet<Error> Errors { get; set; }
             public IEnumerable<Category> Categories { get; private set; }
             public IEnumerable<Tag> Tags { get; private set; }
+            public IEnumerable<Widget> Widgets { get; private set; }
         #endregion
     }
 }
