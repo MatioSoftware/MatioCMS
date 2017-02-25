@@ -15,16 +15,15 @@ namespace MatioCMS.Includes.Models
         {
             [Key, Required, ConcurrencyCheck, MaxLength(35)]
             public string Username { get; set; }
-            [Required]
+            [Required,MaxLength(128)]
             public string Fullname { get; set; }
-            public string Description { get; set; }
             public DateTime DateAdded { get; set; } = DateTime.UtcNow;
         }
 
         [Table("Plugins")]
         public class Plugin
         {
-            [Key, Required, ConcurrencyCheck]
+            [Key, Required, MaxLength(50), ConcurrencyCheck]
             public string Name { get; set; }
             [DefaultValue(false)]
             public bool Enabled { get; set; }
@@ -37,9 +36,9 @@ namespace MatioCMS.Includes.Models
         [Table("Themes")]
         public class Theme
         {
-            [Key,Required]
+            [Key,Required, MaxLength(50)]
             public string Name { get; set; }
-            [Required]
+            [Required, MaxLength(128)]
             public string Title { get; set; }
             public DateTime DateAdded { get; set; } = DateTime.UtcNow;
             public DateTime DateModified { get; set; } = DateTime.UtcNow;
@@ -51,7 +50,7 @@ namespace MatioCMS.Includes.Models
         {
             [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int ID { get; set; }
-            [Required]
+            [Required,MaxLength(128)]
             public string ExceptionName { get; set; }
             [Required, DataType(DataType.Url)]
             public string Filename { get; set; }
@@ -60,6 +59,7 @@ namespace MatioCMS.Includes.Models
             public string Message { get; set; }
             [Required]
             public string StackTrace { get; set; }
+            public DateTime DateAdded { get; set; } = DateTime.UtcNow;
         }
 
         [Table("Statistics")]
@@ -99,9 +99,9 @@ namespace MatioCMS.Includes.Models
     {
         [Key, ConcurrencyCheck, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
-        [Required]
+        [Required, MaxLength(35)]
         public string Name { get; set; }
-        [Required]
+        [Required, MaxLength(128)]
         public string Title { get; set; }
         public DateTime DateAdded { get; set; } = DateTime.UtcNow;
         [Range(0, long.MaxValue), DefaultValue(0)]
@@ -113,12 +113,34 @@ namespace MatioCMS.Includes.Models
     {
         [Key, ConcurrencyCheck, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
-        [Required]
+        [Required, MaxLength(128)]
         public string WidgetName { get; set; }
+        [MaxLength(50)]
         public string AreaName { get; set; }
         [DefaultValue(0)]
         public byte PlaceNumber { get; set; }
         public string Settings { get; set; }
+    }
+
+    [Table("Menu")]
+    public class Menu
+    {
+        [Key,Required,MaxLength(50)]
+        public string Name { get; set; }
+        [MaxLength(50)]
+        public string AreaName { get; set; }
+        public string Content { get; set; }
+    }
+
+    [Table("Links")]
+    public class Link
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+        [Required, MaxLength(128)]
+        public string Title { get; set; }
+        [Url, MaxLength(256)]
+        public string URL { get; set; }
     }
     #endregion
 }

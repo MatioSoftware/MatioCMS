@@ -64,18 +64,31 @@ namespace MatioCMS.Database
             // Widgets
             modelBuilder.Entity<Widget>().Property("WidgetName").IsUnicode(false);
             modelBuilder.Entity<Widget>().Property("AreaName").IsUnicode(false);
+
+            // Menus
+            modelBuilder.Entity<Menu>().Property("Name").IsUnicode(false);
+            modelBuilder.Entity<Menu>().Property("AreaName").IsUnicode(false);
+
+            // Links
+            modelBuilder.Entity<Link>().Property("URL").IsUnicode(false);
         }
 
         #region Properties
-            public IEnumerable<Admin> Admins { get; private set; }
-            public IEnumerable<Config> Config { get; private set; }
-            public DbSet<Stat> Statistics { get; set; }
-            public IEnumerable<Plugin> Plugins { get; private set; }
-            public IEnumerable<Theme> Themes { get; private set; }
+            public IEnumerable<Admin> Admins { get; set; }
+            public IEnumerable<Config> Config { get; set; }
+            public IEnumerable<Plugin> Plugins { get; set; }
+            public IEnumerable<Theme> Themes { get; set; }
             public DbSet<Error> Errors { get; set; }
-            public IEnumerable<Category> Categories { get; private set; }
-            public IEnumerable<Tag> Tags { get; private set; }
-            public IEnumerable<Widget> Widgets { get; private set; }
+            public IEnumerable<Category> Categories { get; set; }
+            public IEnumerable<Tag> Tags { get; set; }
+            public IEnumerable<Widget> Widgets { get; set; }
+            public IEnumerable<Menu> Menus { get; set; }
+            public IEnumerable<Link> Links { get; set; }
+        #endregion
+
+        #region Methods
+            public void UpdateStatistics()
+            { this.Database.ExecuteSqlCommand("[matiocms].UpdateStatistics"); }
         #endregion
     }
 }
