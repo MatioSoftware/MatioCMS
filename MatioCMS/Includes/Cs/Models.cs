@@ -73,74 +73,89 @@ namespace MatioCMS.Includes.Models
     #endregion
 
     #region Content
-    [Table("Categories")]
-        public class Category
+        [Table("Categories")]
+            public class Category
+            {
+                [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+                public int ID { get; set; }
+                [Required, MaxLength(35)]
+                public string Name { get; set; }
+                [Required, MaxLength(128)]
+                public string Title { get; set; }
+                public DateTime DateAdded { get; set; } = DateTime.UtcNow;
+                public DateTime DateModified { get; set; } = DateTime.UtcNow;
+                [DefaultValue(null)]
+                public int ParentID { get; set; }
+                public string Description { get; set; }
+                [Range(0, long.MaxValue), DefaultValue(0)]
+                public long Views { get; set; }
+
+                public Category Parent { get; set; }
+                public IEnumerable<Category> Children { get; set; }
+            }
+
+        [Table("Tags")]
+        public class Tag
         {
-            [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+            [Key, ConcurrencyCheck, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int ID { get; set; }
             [Required, MaxLength(35)]
             public string Name { get; set; }
             [Required, MaxLength(128)]
             public string Title { get; set; }
             public DateTime DateAdded { get; set; } = DateTime.UtcNow;
-            public DateTime DateModified { get; set; } = DateTime.UtcNow;
-            [DefaultValue(null)]
-            public int ParentID { get; set; }
-            public string Description { get; set; }
             [Range(0, long.MaxValue), DefaultValue(0)]
             public long Views { get; set; }
-
-            public Category Parent { get; set; }
-            public IEnumerable<Category> Children { get; set; }
         }
 
-    [Table("Tags")]
-    public class Tag
-    {
-        [Key, ConcurrencyCheck, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
-        [Required, MaxLength(35)]
-        public string Name { get; set; }
-        [Required, MaxLength(128)]
-        public string Title { get; set; }
-        public DateTime DateAdded { get; set; } = DateTime.UtcNow;
-        [Range(0, long.MaxValue), DefaultValue(0)]
-        public long Views { get; set; }
-    }
+        [Table("Widgets")]
+        public class Widget
+        {
+            [Key, ConcurrencyCheck, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+            public int ID { get; set; }
+            [Required, MaxLength(128)]
+            public string WidgetName { get; set; }
+            [MaxLength(50)]
+            public string AreaName { get; set; }
+            [DefaultValue(0)]
+            public byte PlaceNumber { get; set; }
+            public string Settings { get; set; }
+        }
 
-    [Table("Widgets")]
-    public class Widget
-    {
-        [Key, ConcurrencyCheck, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
-        [Required, MaxLength(128)]
-        public string WidgetName { get; set; }
-        [MaxLength(50)]
-        public string AreaName { get; set; }
-        [DefaultValue(0)]
-        public byte PlaceNumber { get; set; }
-        public string Settings { get; set; }
-    }
+        [Table("Menu")]
+        public class Menu
+        {
+            [Key,Required,MaxLength(50)]
+            public string Name { get; set; }
+            [MaxLength(50)]
+            public string AreaName { get; set; }
+            public string Content { get; set; }
+        }
 
-    [Table("Menu")]
-    public class Menu
-    {
-        [Key,Required,MaxLength(50)]
-        public string Name { get; set; }
-        [MaxLength(50)]
-        public string AreaName { get; set; }
-        public string Content { get; set; }
-    }
+        [Table("Links")]
+        public class Link
+        {
+            [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+            public int ID { get; set; }
+            [Required, MaxLength(128)]
+            public string Title { get; set; }
+            [Url, MaxLength(256)]
+            public string URL { get; set; }
+        }
 
-    [Table("Links")]
-    public class Link
-    {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
-        [Required, MaxLength(128)]
-        public string Title { get; set; }
-        [Url, MaxLength(256)]
-        public string URL { get; set; }
-    }
+        [Table("Gallery")]
+        public class Gallery
+        {
+            public int ID { get; set; }
+            public string Title { get; set; }
+            public string Path { get; set; }
+            public DateTime DateAdded { get; set; }
+            public byte Category { get; set; }
+            public string Extension { get; set; }
+            public string Description { get; set; }
+            public string AuthorID { get; set; }
+
+            public Admin Author { get; set; }
+        }
     #endregion
 }

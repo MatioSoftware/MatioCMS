@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MatioCMS.Includes.Models;
 
 namespace MatioCMS.Areas.Admin.Includes
 {
@@ -11,6 +12,11 @@ namespace MatioCMS.Areas.Admin.Includes
         public string Description { get; set; }
         public DateTime DateAdded { get; set; }
         public AdminRole Role { get; set; }
+
+        public IEnumerable<Log> Logs { get; set; }
+        public IEnumerable<adminstartpage> AdminStartPage_Widgets { get; set; }
+        public IEnumerable<Gallery> MyGalleryItems { get; set; }
+
     }
 
     public enum AdminRole

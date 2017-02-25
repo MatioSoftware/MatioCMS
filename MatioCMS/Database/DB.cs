@@ -71,6 +71,9 @@ namespace MatioCMS.Database
 
             // Links
             modelBuilder.Entity<Link>().Property("URL").IsUnicode(false);
+
+            // Gallery
+            modelBuilder.Entity<>()
         }
 
         #region Properties
@@ -84,6 +87,7 @@ namespace MatioCMS.Database
             public IEnumerable<Widget> Widgets { get; set; }
             public IEnumerable<Menu> Menus { get; set; }
             public IEnumerable<Link> Links { get; set; }
+            public IEnumerable<Gallery> Gallery { get; set; }
         #endregion
 
         #region Methods
