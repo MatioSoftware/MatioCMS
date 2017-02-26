@@ -74,7 +74,7 @@ namespace MatioCMS.Includes.Models
 
     #region Content
         [Table("Categories")]
-            public class Category
+        public class Category
             {
                 [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
                 public int ID { get; set; }
@@ -157,5 +157,7 @@ namespace MatioCMS.Includes.Models
 
             public Admin Author { get; set; }
         }
+
+        
     #endregion
 }

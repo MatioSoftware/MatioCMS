@@ -147,7 +147,7 @@ namespace MatioCMS
                 // Category
                 routes.MapRoute(
                     name: "Category",
-                    template: "category/{name}/{pagenumber?}",
+                    template: "category/{*arguments}",
                     defaults: new { controller = "Content", action = "Category" }
                     );
 
