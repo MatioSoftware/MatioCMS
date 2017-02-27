@@ -27,8 +27,10 @@ namespace MatioCMS.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            FileStream json = new FileStream(Path.Combine(rootpath, "/Database/ConnectionString.json"), FileMode.Open, FileAccess.Read);
-            optionsBuilder.UseSqlServer(JsonConvert.DeserializeObject<string>(new StreamReader(json).ReadToEnd()));
+            FileStream file = new FileStream(Path.Combine(rootpath, "/Database/ConnectionString.json"), FileMode.Open, FileAccess.Read);
+            string config = new StreamReader(file).ReadToEnd();
+            if(string.IsNullOrWhiteSpace(config))
+            optionsBuilder.UseSqlServer(config);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

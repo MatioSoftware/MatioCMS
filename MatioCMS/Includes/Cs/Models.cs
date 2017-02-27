@@ -146,18 +146,44 @@ namespace MatioCMS.Includes.Models
         [Table("Gallery")]
         public class Gallery
         {
+            [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int ID { get; set; }
+            [Required,StringLength(128, MinimumLength = 3)]
             public string Title { get; set; }
+            [Required]
             public string Path { get; set; }
-            public DateTime DateAdded { get; set; }
-            public byte Category { get; set; }
+            public DateTime DateAdded { get; set; } = DateTime.UtcNow;
+            [Required]
+            public GalleryCategories Category { get; set; }
+            [Required,RegularExpression("^[A-Z]{2,6}$")]
             public string Extension { get; set; }
             public string Description { get; set; }
-            public string AuthorID { get; set; }
+            [Required,MaxLength(35)]
+            public string AuthorUsername { get; set; }
 
             public Admin Author { get; set; }
         }
-
+        public enum GalleryCategories
+        {
+            Image = 1,
+            Video = 2,
+            Audio = 3,
+            Document = 4,
+            Binary = 5,
+            Archive = 6
+        }
         
+        public class PublishedPage
+        {
+            public long ID { get; set; }
+            public string Name { get; set; }
+            public string Title { get; set; }
+            public string Categories { get; set; }
+            public string Tags { get; set; }
+            public string Content { get; set; }
+            public string TextContent { get; set; }
+            public string CreatedBy_Username { get; set; }
+
+        }
     #endregion
 }
