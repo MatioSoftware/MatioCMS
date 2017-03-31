@@ -1,0 +1,54 @@
+﻿{
+  "$schema": "/Includes/Schemas/json/translation-schema.json",
+  "Titles": [
+    {
+      "Zone": "GLOBAL",
+      "Items": [
+
+      ]
+    }
+  ],
+  "Messages": [
+    {
+      "Zone": "GLOBAL",
+      "Items": [
+        [
+          {
+            "Language": "en",
+            "Value": "Version"
+          },
+          {
+            "Language": "pl",
+            "Value": "Wersja"
+          }
+        ],
+
+        [
+          {
+            "Language": "en",
+            "Value": "Enter the path of website root dir."
+          },
+          {
+            "Language": "pl",
+            "Value": "Wprowadź ścieżkę katalogu głównego witryny."
+          }
+        ]
+      ]
+    },
+    {
+      "Zone": "Admin",
+      "Items": [
+        [
+          {
+            "Language": "en",
+            "Value": "Login data is incorrect."
+          },
+          {
+            "Language": "pl",
+            "Value": "Dane logowania są niepoprawne."
+          }
+        ]
+      ]
+    }
+  ]
+}
