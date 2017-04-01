@@ -4,3 +4,6 @@ D:\Matio Software\MatioCMS\MSSQL_Version\bin\Debug\netcoreapp1.1\Matio CMS for M
 D:\Matio Software\MatioCMS\MSSQL_Version\bin\Debug\netcoreapp1.1\Matio CMS for MSSQL.dll
 D:\Matio Software\MatioCMS\MSSQL_Version\obj\Debug\netcoreapp1.1\MSSQL Version.csprojResolveAssemblyReference.cache
 D:\Matio Software\MatioCMS\MSSQL_Version\obj\Debug\netcoreapp1.1\MSSQL Version.AssemblyInfo.cs
+D:\Matio Software\MatioCMS\MSSQL_Version\bin\Debug\netcoreapp1.1\Matio CMS for MSSQL.pdb
+D:\Matio Software\MatioCMS\MSSQL_Version\obj\Debug\netcoreapp1.1\Matio CMS for MSSQL.dll
+D:\Matio Software\MatioCMS\MSSQL_Version\obj\Debug\netcoreapp1.1\Matio CMS for MSSQL.pdb

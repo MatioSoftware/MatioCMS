@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
+using MatioCMS.Includes.Models;
 
 namespace MatioCMS.Database
 {
@@ -69,7 +70,9 @@ namespace MatioCMS.Database
             modelBuilder.Entity<Link>().Property("URL").IsUnicode(false);
 
             // Gallery
-            modelBuilder.Entity<>()
+            modelBuilder.Entity<Gallery>().Property("Extension").IsUnicode(false);
+            modelBuilder.Entity<Gallery>().Property("AuthorUsername").IsUnicode(false);
+            modelBuilder.Entity<Gallery>().HasOne(item => item.Author).WithMany(item => item.AddedGalleryItems).HasForeignKey(item => item.AuthorUsername);
         }
 
         #region Properties
