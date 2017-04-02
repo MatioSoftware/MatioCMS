@@ -39,9 +39,17 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\gallery\archives\" />
+    <Folder Include="Content\gallery\audio\" />
+    <Folder Include="Content\gallery\binaries\" />
+    <Folder Include="Content\gallery\documents\" />
+    <Folder Include="Content\gallery\images\" />
+    <Folder Include="Content\gallery\videos\" />
+    <Folder Include="Content\Plugins\" />
     <Folder Include="Controllers\" />
     <Folder Include="Includes\lib\bootstrap\js\" />
     <Folder Include="Includes\Schemas\xsd\" />
+    <Folder Include="installation\" />
   </ItemGroup>
 
 </Project>
