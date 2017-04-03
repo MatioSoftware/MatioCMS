@@ -38,10 +38,10 @@ namespace MatioCMS.Admin.Includes
             public AdminRole Role { get; set; }
             public string StartPage { get; set; }
 
-            public IEnumerable<Log> Logs { get; set; }
-            public IEnumerable<Gallery> AddedGalleryItems { get; set; }
-            public IEnumerable<Page> CreatedPages { get; set; }
-            public IEnumerable<PageChange> PageChanges { get; set; }
+            public virtual ICollection<Log> Logs { get; set; }
+            public virtual ICollection<Gallery> AddedGalleryItems { get; set; }
+            public ICollection<Page> CreatedPages { get; set; }
+            public virtual ICollection<PageChange> PageChanges { get; set; }
 
         }
 
@@ -60,7 +60,7 @@ namespace MatioCMS.Admin.Includes
             public string Action { get; set; }
             public string Description { get; set; }
 
-            public Admin Admin { get; set; }
+            public Admin User { get; set; }
         }      
 
         [Table("Pages")]
@@ -81,7 +81,7 @@ namespace MatioCMS.Admin.Includes
             public long Views { get; set; }
 
             public Admin CreatedBy { get; set; }
-            public PageChange Changes { get; set; }
+            public virtual ICollection<PageChange> Changes { get; set; }
         }
 
         [Table("PageChanges")]

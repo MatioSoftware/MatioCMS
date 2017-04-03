@@ -24,7 +24,6 @@ namespace MatioCMS.Admin.Includes
             // Config
             modelBuilder.Entity<Config>().Property("Name").IsUnicode(false);
             modelBuilder.Entity<Config>().Property("Value").IsUnicode(false);
-
             // Admins
             modelBuilder.Entity<Models.Admin>().Property("Username").IsUnicode(false);
             modelBuilder.Entity<Models.Admin>().Property("Passkey").IsUnicode(false);
@@ -56,6 +55,19 @@ namespace MatioCMS.Admin.Includes
             modelBuilder.Entity<Log>().Property("Username").IsUnicode(false);
             modelBuilder.Entity<Log>().Property("ObjectType").IsUnicode(false);
             modelBuilder.Entity<Log>().Property("Action").IsUnicode(false);
+            modelBuilder.Entity<Log>().HasOne(item => item.User).WithMany(item => item.Logs).HasForeignKey(item => item.Username);
+
+            // Gallery
+            modelBuilder.Entity<Gallery>().Property("Extension").IsUnicode(false);
+            modelBuilder.Entity<Gallery>().HasOne(item => item.Author).WithMany(item => item.AddedGalleryItems).HasForeignKey(item=> item.AuthorUsername);
+
+            // Page
+            modelBuilder.Entity<Page>().Property("Name").IsUnicode(false);
+            modelBuilder.Entity<Page>().HasOne(item => item.CreatedBy).WithMany(item => item.CreatedPages).HasForeignKey(item=> item.CreatedBy_Username);
+
+            // Page Changes
+            modelBuilder.Entity<PageChange>().HasOne(item => item.EditedBy).WithMany(item => item.PageChanges).HasForeignKey(item=> item.EditedBy_Username);
+            modelBuilder.Entity<PageChange>().HasOne(item => item.Page).WithMany(item => item.Changes).HasForeignKey(item=> item.PageID);
         }
 
         public new DbSet<Models.Admin> Admins { get; set; }
@@ -67,5 +79,8 @@ namespace MatioCMS.Admin.Includes
         public new DbSet<Tag> Tags { get; set; }
         public new DbSet<Widget> Widgets { get; set; }
         public DbSet<Log> Logs { get; set; }
+        public new DbSet<Gallery> Gallery { get; set; }
+        public DbSet<Page> Pages { get; set; }
+        public DbSet<PageChange> PageChanges { get; set; }
     }
 }
