@@ -68,19 +68,31 @@ namespace MatioCMS.Admin.Includes
             // Page Changes
             modelBuilder.Entity<PageChange>().HasOne(item => item.EditedBy).WithMany(item => item.PageChanges).HasForeignKey(item=> item.EditedBy_Username);
             modelBuilder.Entity<PageChange>().HasOne(item => item.Page).WithMany(item => item.Changes).HasForeignKey(item=> item.PageID);
+
+            
         }
 
-        public new DbSet<Models.Admin> Admins { get; set; }
-        public DbSet<sessionmodel> Sessions { get; set; }
-        public new DbSet<Config> Config { get; set; }
-        public new DbSet<Plugin> Plugins { get; set; }
-        public new DbSet<Theme> Themes { get; set; }
-        public new DbSet<Category> Categories { get; set; }
-        public new DbSet<Tag> Tags { get; set; }
-        public new DbSet<Widget> Widgets { get; set; }
-        public DbSet<Log> Logs { get; set; }
-        public new DbSet<Gallery> Gallery { get; set; }
-        public DbSet<Page> Pages { get; set; }
-        public DbSet<PageChange> PageChanges { get; set; }
+        #region Tables
+            #region Primary Settings and Users
+                public new DbSet<Models.Admin> Admins { get; set; }
+                public DbSet<sessionmodel> Sessions { get; set; }
+                public new DbSet<Config> Config { get; set; }
+                public new DbSet<Plugin> Plugins { get; set; }
+                public new DbSet<Theme> Themes { get; set; }
+                public DbSet<Log> Logs { get; set; }
+            #endregion
+
+            #region Content
+                public new DbSet<Category> Categories { get; set; }
+                public new DbSet<Tag> Tags { get; set; }
+                public new DbSet<Widget> Widgets { get; set; }
+                public new DbSet<Gallery> Gallery { get; set; }
+
+                public DbSet<Page> Pages { get; set; }
+                public DbSet<PageChange> PageChanges { get; set; }
+
+
+            #endregion
+        #endregion
     }
 }

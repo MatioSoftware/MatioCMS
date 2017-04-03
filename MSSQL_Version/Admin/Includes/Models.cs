@@ -23,8 +23,9 @@ namespace MatioCMS.Admin.Includes
 
     namespace Models
     {
-        [Table("Admins")]
-        public class Admin
+        #region Primary Settings and Users
+            [Table("Admins")]
+            public class Admin
         {
             [Key, Required, StringLength(35, MinimumLength = 5)]
             public string Username { get; set; }
@@ -45,8 +46,17 @@ namespace MatioCMS.Admin.Includes
 
         }
 
-        [Table("Logs")]
-        public class Log
+            [Table("Sessions")]
+            public class sessionmodel
+        {
+            [Key, Required]
+            public Guid ID { get; set; }
+            public DateTime TimeAdded { get; set; } = DateTime.UtcNow;
+            public string Data { get; set; }
+        }
+
+            [Table("Logs")]
+            public class Log
         {
             [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int ID { get; set; }
@@ -61,10 +71,12 @@ namespace MatioCMS.Admin.Includes
             public string Description { get; set; }
 
             public Admin User { get; set; }
-        }      
+        }
+        #endregion
 
-        [Table("Pages")]
-        public class Page
+        #region Content
+            [Table("Pages")]
+            public class Page
         {
             [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public long ID { get; set; }
@@ -84,8 +96,8 @@ namespace MatioCMS.Admin.Includes
             public virtual ICollection<PageChange> Changes { get; set; }
         }
 
-        [Table("PageChanges")]
-        public class PageChange
+            [Table("PageChanges")]
+            public class PageChange
         {
             [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public long ID { get; set; }
@@ -105,15 +117,14 @@ namespace MatioCMS.Admin.Includes
             public Admin EditedBy { get; set; }
             public Page Page { get; set; }
         }
+        #endregion
 
-        [Table("Sessions")]
-        public class sessionmodel
-        {
-            [Key, Required]
-            public Guid ID { get; set; }
-            public DateTime TimeAdded { get; set; } = DateTime.UtcNow;
-            public string Data { get; set; }
-        }
+
+
+
+
+
+
     }
 
 }
