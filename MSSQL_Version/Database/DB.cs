@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using MatioCMS.Includes.Models;
@@ -32,12 +33,15 @@ namespace MatioCMS.Database
         {
             modelBuilder.HasDefaultSchema("matiocms");
 
+            // Readonly data
+            modelBuilder.Ignore<PublishedPage>();
+
             // Config
             modelBuilder.Entity<Config>().Property("Name").IsUnicode(false);
             modelBuilder.Entity<Config>().Property("Value").IsUnicode(false);
 
             // Admins
-            modelBuilder.Entity<Admin>().Property("Username").IsUnicode(false);
+            modelBuilder.Entity<Includes.Models.Admin>().Property("Username").IsUnicode(false);
 
             // Errors
             modelBuilder.Entity<Error>().Property("ExceptionName").IsUnicode(false);
@@ -75,23 +79,31 @@ namespace MatioCMS.Database
             modelBuilder.Entity<Gallery>().HasOne(item => item.Author).WithMany(item => item.AddedGalleryItems).HasForeignKey(item => item.AuthorUsername);
         }
 
-        #region Properties
-        public IEnumerable<Admin> Admins { get; set; }
-        public IEnumerable<Config> Config { get; set; }
-        public IEnumerable<Plugin> Plugins { get; set; }
-        public IEnumerable<Theme> Themes { get; set; }
-        public DbSet<Error> Errors { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
-        public IEnumerable<Tag> Tags { get; set; }
-        public IEnumerable<Widget> Widgets { get; set; }
-        public IEnumerable<Menu> Menus { get; set; }
-        public IEnumerable<Link> Links { get; set; }
-        public IEnumerable<Gallery> Gallery { get; set; }
+        #region Tables
+            #region Configuration
+                public IEnumerable<Includes.Models.Admin> Admins { get; set; }
+                public IEnumerable<Config> Config { get; set; }
+                public IEnumerable<Plugin> Plugins { get; set; }
+                public IEnumerable<Theme> Themes { get; set; }
+                public DbSet<Error> Errors { get; set; }
+
+            #endregion
+
+            #region Content
+                public IQueryable<Category> Categories { get; set; }
+                public IQueryable<Tag> Tags { get; set; }
+                public IQueryable<Widget> Widgets { get; set; }
+                public IQueryable<Menu> Menus { get; set; }
+                public IQueryable<Link> Links { get; set; }
+                public IQueryable<Gallery> Gallery { get; set; }
+                private DbSet<PublishedPage> publishedpages { get; set; }
+                public IQueryable<PublishedPage> PublishedPages => this.publishedpages.FromSql(@"SELECT * FROM [GetPublishedPages]() ORDER BY [DatePublished] DESC");
+            #endregion
         #endregion
 
         #region Methods
         public void UpdateStatistics()
-        { this.Database.ExecuteSqlCommand("[matiocms].UpdateStatistics"); }
+            { this.Database.ExecuteSqlCommand("[matiocms].UpdateStatistics"); }
         #endregion
     }
 }

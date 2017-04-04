@@ -12,7 +12,7 @@
     {
       "Zone": "GLOBAL",
       "Items": [
-        [
+        [ // 0
           {
             "Language": "en",
             "Value": "Version"
@@ -23,7 +23,7 @@
           }
         ],
 
-        [
+        [ // 1
           {
             "Language": "en",
             "Value": "Enter the path of website root dir."
@@ -38,7 +38,7 @@
     {
       "Zone": "Admin",
       "Items": [
-        [
+        [ // 0
           {
             "Language": "en",
             "Value": "Login data is incorrect."

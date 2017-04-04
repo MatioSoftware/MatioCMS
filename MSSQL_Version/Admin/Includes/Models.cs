@@ -23,7 +23,7 @@ namespace MatioCMS.Admin.Includes
 
     namespace Models
     {
-        #region Primary Settings and Users
+        #region Primary Configuration
             [Table("Admins")]
             public class Admin
         {
@@ -72,10 +72,18 @@ namespace MatioCMS.Admin.Includes
 
             public Admin User { get; set; }
         }
+        [Table("Statistics")]
+        public class Stat
+        {
+            [Key, DataType(DataType.Date), ConcurrencyCheck]
+            public DateTime Date { get; set; } = DateTime.UtcNow.Date;
+            [Range(0, int.MaxValue), DefaultValue(0)]
+            public int Views { get; set; }
+        }
         #endregion
 
         #region Content
-            [Table("Pages")]
+        [Table("Pages")]
             public class Page
         {
             [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -73,13 +73,14 @@ namespace MatioCMS.Admin.Includes
         }
 
         #region Tables
-            #region Primary Settings and Users
+            #region Configuration
                 public new DbSet<Models.Admin> Admins { get; set; }
                 public DbSet<sessionmodel> Sessions { get; set; }
                 public new DbSet<Config> Config { get; set; }
                 public new DbSet<Plugin> Plugins { get; set; }
                 public new DbSet<Theme> Themes { get; set; }
                 public DbSet<Log> Logs { get; set; }
+                public new DbSet<Stat>
             #endregion
 
             #region Content
