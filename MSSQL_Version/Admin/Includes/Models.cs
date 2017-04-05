@@ -26,25 +26,24 @@ namespace MatioCMS.Admin.Includes
         #region Primary Configuration
             [Table("Admins")]
             public class Admin
-        {
-            [Key, Required, StringLength(35, MinimumLength = 5)]
-            public string Username { get; set; }
-            [Required, RegularExpression("^[0-9A-f]{64}$")]
-            public string Passkey { get; set; }
-            [Required, RegularExpression(@"^\w+.*"), MaxLength(128)]
-            public string Fullname { get; set; }
-            public string Description { get; set; }
-            public DateTime DateAdded { get; set; } = DateTime.UtcNow;
-            [Required]
-            public AdminRole Role { get; set; }
-            public string StartPage { get; set; }
+            {
+                [Key, Required, StringLength(35, MinimumLength = 5)]
+                public string Username { get; set; }
+                [Required, RegularExpression("^[0-9A-f]{64}$")]
+                public string Passkey { get; set; }
+                [Required, RegularExpression(@"^\w+.*"), MaxLength(128)]
+                public string Fullname { get; set; }
+                public string Description { get; set; }
+                public DateTime DateAdded { get; set; } = DateTime.UtcNow;
+                [Required]
+                public AdminRole Role { get; set; }
+                public string StartPage { get; set; }
 
-            public virtual ICollection<Log> Logs { get; set; }
-            public virtual ICollection<Gallery> AddedGalleryItems { get; set; }
-            public ICollection<Page> CreatedPages { get; set; }
-            public virtual ICollection<PageChange> PageChanges { get; set; }
-
-        }
+                public virtual ICollection<Log> Logs { get; set; }
+                public virtual ICollection<Gallery> AddedGalleryItems { get; set; }
+                public ICollection<Page> CreatedPages { get; set; }
+                public virtual ICollection<PageChange> PageChanges { get; set; }
+            }
 
             [Table("Sessions")]
             public class sessionmodel
@@ -72,59 +71,103 @@ namespace MatioCMS.Admin.Includes
 
             public Admin User { get; set; }
         }
-        [Table("Statistics")]
-        public class Stat
-        {
-            [Key, DataType(DataType.Date), ConcurrencyCheck]
-            public DateTime Date { get; set; } = DateTime.UtcNow.Date;
-            [Range(0, int.MaxValue), DefaultValue(0)]
-            public int Views { get; set; }
-        }
+
+            [Table("Statistics")]
+            public class Stat
+            {
+                [Key, DataType(DataType.Date), ConcurrencyCheck]
+                public DateTime Date { get; set; } = DateTime.UtcNow.Date;
+                [Range(0, int.MaxValue), DefaultValue(0)]
+                public int Views { get; set; }
+            }
         #endregion
 
         #region Content
-        [Table("Pages")]
+            [Table("Pages")]
             public class Page
-        {
-            [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-            public long ID { get; set; }
-            [Required, MaxLength(50)]
-            public string Name { get; set; }
-            [MaxLength(128)]
-            public string Categories { get; set; }
-            [MaxLength(128)]
-            public string Tags { get; set; }
-            [Required, MaxLength(35)]
-            public string CreatedBy_Username { get; set; }
-            public DateTime DateAdded { get; set; } = DateTime.UtcNow;
-            [Range(0, long.MaxValue), DefaultValue(0)]
-            public long Views { get; set; }
+            {
+                [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+                public long ID { get; set; }
+                [Required, MaxLength(50)]
+                public string Name { get; set; }
+                [MaxLength(128)]
+                public string Categories { get; set; }
+                [MaxLength(128)]
+                public string Tags { get; set; }
+                [Required, MaxLength(35)]
+                public string CreatedBy_Username { get; set; }
+                public DateTime DateAdded { get; set; } = DateTime.UtcNow;
+                [Range(0, long.MaxValue), DefaultValue(0)]
+                public long Views { get; set; }
 
-            public Admin CreatedBy { get; set; }
-            public virtual ICollection<PageChange> Changes { get; set; }
-        }
+                public Admin CreatedBy { get; set; }
+                public virtual ICollection<PageChange> Changes { get; set; }
+            }
 
             [Table("PageChanges")]
             public class PageChange
-        {
-            [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-            public long ID { get; set; }
-            [Required]
-            public long PageID { get; set; }
-            [Required, MaxLength(256)]
-            public string Title { get; set; }
-            [Required, MaxLength(35)]
-            public string EditedBy_Username { get; set; }
-            public string Content { get; set; }
-            public string TextContent { get; set; }
-            public DateTime DateModified { get; set; } = DateTime.UtcNow;
-            [DefaultValue(false)]
-            public bool IsPublished { get; set; }
-            public DateTime PublishDate { get; set; } = DateTime.UtcNow;
+            {
+                [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+                public long ID { get; set; }
+                [Required]
+                public long PageID { get; set; }
+                [Required, MaxLength(256)]
+                public string Title { get; set; }
+                [Required, MaxLength(35)]
+                public string EditedBy_Username { get; set; }
+                public string Content { get; set; }
+                public string TextContent { get; set; }
+                public DateTime DateModified { get; set; } = DateTime.UtcNow;
+                [DefaultValue(false)]
+                public bool IsPublished { get; set; }
+                public DateTime PublishDate { get; set; } = DateTime.UtcNow;
 
-            public Admin EditedBy { get; set; }
-            public Page Page { get; set; }
-        }
+                public Admin EditedBy { get; set; }
+                public Page Page { get; set; }
+            }
+
+            [Table("Post")]
+            public class Post
+            {
+                [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+                public long ID { get; set; }
+                [Required, StringLength(50, MinimumLength = 3)]
+                public string Name { get; set; }
+                [Required]
+                public string CreatedBy_Username { get; set; }
+                public string Categories { get; set; }
+                public string Tags { get; set; }
+                public DateTime DateAdded { get; set; } = DateTime.UtcNow;
+                [DefaultValue(false)]
+                public bool Pinned { get; set; }
+                [Range(0, long.MaxValue), DefaultValue(0)]
+                public long Views { get; set; }
+
+                public virtual Admin CreatedBy { get; set; }
+                public virtual ICollection<PostChanges> Changes { get; set; }
+            }
+
+            [Table("PostChanges")]
+            public class PostChanges
+            { 
+                [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+                public long ID { get; set; }
+                [Required]
+                public long PostID { get; set; }
+                [Required, StringLength(256, MinimumLength = 3)]
+                public string Title { get; set; }
+                [Required]
+                public string EditedBy_Username { get; set; }
+                public string Content { get; set; }
+                public string TextContent { get; set; }
+                public DateTime DateModified { get; set; } = DateTime.UtcNow;
+                [DefaultValue(false)]
+                public bool IsPublished { get; set; }
+                public DateTime PublishDate { get; set; } = DateTime.UtcNow;
+
+                public virtual Admin EditedBy { get; set; }
+                public virtual Post Post { get; set; }
+            }
         #endregion
 
 

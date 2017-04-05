@@ -60,7 +60,7 @@ namespace MatioCMS.Includes.Models
             [Required, DataType(DataType.Url)]
             public string Filename { get; set; }
             [DefaultValue(0)]
-            public ushort Line { get; set; }
+            public uint Line { get; set; }
             public string Message { get; set; }
             [Required]
             public string StackTrace { get; set; }
@@ -69,7 +69,7 @@ namespace MatioCMS.Includes.Models
     #endregion
 
     #region Content
-        [Table("Categories")]
+    [Table("Categories")]
         public class Category
         {
             [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -138,6 +138,23 @@ namespace MatioCMS.Includes.Models
             [Url, MaxLength(256)]
             public string URL { get; set; }
         }
+        
+        [Table("Snippets")]
+        public class Snippet
+        {
+            [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+            public int ID { get; set; }
+            [Required, StringLength(128, MinimumLength = 3)]
+            public string Title { get; set; }
+            [Required, StringLength(35,MinimumLength = 2)]
+            public string Platform { get; set; }
+            [Required, StringLength(35, MinimumLength = 2)]
+            public string ObjectType { get; set; }
+            [Required, StringLength(128,MinimumLength = 1)]
+            public string ObjectID { get; set; }
+
+            public enum SnippetPlatform { Facebook, Twitter, Instagram, GooglePlus, GoogleMaps, YouTube, Pinterest, Flickr, Tumblr, LinkedIn }
+        }
 
         [Table("Gallery")]
         public class Gallery
@@ -183,6 +200,24 @@ namespace MatioCMS.Includes.Models
             public DateTime DateAdded { get; set; }
             public DateTime DateModified { get; set; }
             public DateTime DatePublished { get; set; }
+            public ulong Views { get; set; }
+        }
+
+        public class PublishedPost
+        {
+            public ulong ID { get; set; }
+            public string Name { get; set; }
+            public string Title { get; set; }
+            public string CreatedBy_Username { get; set; }
+            public string EditedBy_Username { get; set; }
+            public string Content { get; set; }
+            public string TextContent { get; set; }
+            public DateTime DateAdded { get; set; }
+            public DateTime DateModified { get; set; }
+            public DateTime DatePublished { get; set; }
+            public string Categories { get; set; }
+            public string Tags { get; set; }
+            public bool Pinned { get; set; }
             public ulong Views { get; set; }
         }
     #endregion

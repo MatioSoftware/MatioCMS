@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using MatioCMS.Includes.Models;
+using System.Data.SqlClient;
 
 namespace MatioCMS.Database
 {
@@ -35,6 +36,7 @@ namespace MatioCMS.Database
 
             // Readonly data
             modelBuilder.Ignore<PublishedPage>();
+            modelBuilder.Ignore<PublishedPost>();
 
             // Config
             modelBuilder.Entity<Config>().Property("Name").IsUnicode(false);
@@ -85,8 +87,6 @@ namespace MatioCMS.Database
                 public IEnumerable<Config> Config { get; set; }
                 public IEnumerable<Plugin> Plugins { get; set; }
                 public IEnumerable<Theme> Themes { get; set; }
-                public DbSet<Error> Errors { get; set; }
-
             #endregion
 
             #region Content
@@ -94,16 +94,29 @@ namespace MatioCMS.Database
                 public IQueryable<Tag> Tags { get; set; }
                 public IQueryable<Widget> Widgets { get; set; }
                 public IQueryable<Menu> Menus { get; set; }
+                public IQueryable<Snippet> Snippets { get; set; }
                 public IQueryable<Link> Links { get; set; }
                 public IQueryable<Gallery> Gallery { get; set; }
                 private DbSet<PublishedPage> publishedpages { get; set; }
                 public IQueryable<PublishedPage> PublishedPages => this.publishedpages.FromSql(@"SELECT * FROM [GetPublishedPages]() ORDER BY [DatePublished] DESC");
+                private DbSet<PublishedPost> publishedposts { get; set; }
+                public IQueryable<PublishedPost> PublishedPosts => this.publishedposts.FromSql(@"SELECT * FROM [GetPublishedPosts]() ORDER BY [DatePublished] DESC");
             #endregion
         #endregion
 
         #region Methods
-        public void UpdateStatistics()
-            { this.Database.ExecuteSqlCommand("[matiocms].UpdateStatistics"); }
+            public void UpdateStatistics()
+            { this.Database.ExecuteSqlCommandAsync("exec [matiocms].UpdateStatistics"); }
+            public void AddError(Error error)
+            {
+                this.Database.ExecuteSqlCommand("exec [matiocms].AddError @exceptionname, @filename, @line, @message, @stacktrace, @dateadded",
+                    new SqlParameter("@exceptionname", error.ExceptionName),
+                    new SqlParameter("@filename", error.Filename),
+                    new SqlParameter("@line", error.Line),
+                    new SqlParameter("@message", error.Message),
+                    new SqlParameter("@stacktrace", error.StackTrace),
+                    new SqlParameter("@dateadded", error.DateAdded));
+            }
         #endregion
     }
 }

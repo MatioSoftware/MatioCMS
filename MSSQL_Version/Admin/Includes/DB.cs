@@ -80,19 +80,21 @@ namespace MatioCMS.Admin.Includes
                 public new DbSet<Plugin> Plugins { get; set; }
                 public new DbSet<Theme> Themes { get; set; }
                 public DbSet<Log> Logs { get; set; }
-                public new DbSet<Stat>
+                public DbSet<Stat> Statistics { get; set; }
+                public DbSet<Error> Errors { get; set; }
             #endregion
 
             #region Content
                 public new DbSet<Category> Categories { get; set; }
                 public new DbSet<Tag> Tags { get; set; }
                 public new DbSet<Widget> Widgets { get; set; }
+                public new DbSet<Snippet> Snippets { get; set; }
                 public new DbSet<Gallery> Gallery { get; set; }
 
                 public DbSet<Page> Pages { get; set; }
                 public DbSet<PageChange> PageChanges { get; set; }
-
-
+                public DbSet<Post> Posts { get; set; }
+                public DbSet<PostChanges> PostChanges { get; set; }
             #endregion
         #endregion
     }
