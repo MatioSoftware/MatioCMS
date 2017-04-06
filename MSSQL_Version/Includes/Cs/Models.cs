@@ -10,9 +10,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace MatioCMS.Includes.Models
 {
     #region Configuration
-        /// <summary>
-        /// Public admin-user model
-        /// </summary>
+    /// <summary>
+    /// Public read-only use models
+    /// </summary>
+
+        [Table("Config")]
+        public class Config
+        {
+            [Key, Required, MaxLength(35)]
+            public string Name { get; set; }
+            public string Value { get; set; }
+        }
+
         [Table("Admins")]
         public class Admin
         {
@@ -22,7 +31,7 @@ namespace MatioCMS.Includes.Models
             public string Fullname { get; set; }
             public DateTime DateAdded { get; set; } = DateTime.UtcNow;
 
-            public IEnumerable<Gallery> AddedGalleryItems { get; set; }
+            public virtual ICollection<Gallery> AddedGalleryItems { get; set; }
         }
 
         [Table("Plugins")]
@@ -69,7 +78,7 @@ namespace MatioCMS.Includes.Models
     #endregion
 
     #region Content
-    [Table("Categories")]
+        [Table("Categories")]
         public class Category
         {
             [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -86,8 +95,8 @@ namespace MatioCMS.Includes.Models
             [Range(0, long.MaxValue), DefaultValue(0)]
             public long Views { get; set; }
 
-            public Category Parent { get; set; }
-            public IEnumerable<Category> Children { get; set; }
+            public virtual Category Parent { get; set; }
+            public virtual ICollection<Category> Children { get; set; }
         }
 
         [Table("Tags")]
@@ -153,7 +162,19 @@ namespace MatioCMS.Includes.Models
             [Required, StringLength(128,MinimumLength = 1)]
             public string ObjectID { get; set; }
 
-            public enum SnippetPlatform { Facebook, Twitter, Instagram, GooglePlus, GoogleMaps, YouTube, Pinterest, Flickr, Tumblr, LinkedIn }
+            public enum SnippetPlatform { Facebook, Twitter, Instagram, GooglePlus, GoogleMaps, YouTube, Pinterest, Flickr, Tumblr }
+            public static class ObjectTypes
+            {
+                public enum Facebook { User, Fanpage, Post }
+                public enum Instagram { User, Post }
+                public enum Twitter { User, Tweet }
+                public enum GooglePlus { User, Post }
+                public enum GoogleMaps { Location, Photo, Direction, StreetView }
+                public enum YouTube { Video, Playlist, Channel }
+                public enum Pinterest { User, Board, Pin }
+                public enum Flickr { User, Photo }
+                public enum Tumblr { Blog, Post }
+            }
         }
 
         [Table("Gallery")]
@@ -174,7 +195,7 @@ namespace MatioCMS.Includes.Models
             [Required, MaxLength(35)]
             public string AuthorUsername { get; set; }
 
-            public Admin Author { get; set; }
+            public virtual Admin Author { get; set; }
         }
         public enum GalleryCategories
         {

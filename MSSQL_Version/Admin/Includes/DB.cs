@@ -21,16 +21,29 @@ namespace MatioCMS.Admin.Includes
         {
             modelBuilder.HasDefaultSchema("matiocms");
 
+            /* CONFIGURATION */
+
             // Config
             modelBuilder.Entity<Config>().Property("Name").IsUnicode(false);
-            modelBuilder.Entity<Config>().Property("Value").IsUnicode(false);
+
             // Admins
             modelBuilder.Entity<Models.Admin>().Property("Username").IsUnicode(false);
             modelBuilder.Entity<Models.Admin>().Property("Passkey").IsUnicode(false);
 
+            // Plugins
+            modelBuilder.Entity<Plugin>().Property("Name").IsUnicode(false);
+
+            // Themes
+            modelBuilder.Entity<Theme>().Property("Name").IsUnicode(false);
+
             // Errors
             modelBuilder.Entity<Error>().Property("ExceptionName").IsUnicode(false);
             modelBuilder.Entity<Error>().Property("Filename").IsUnicode(false);
+
+            // Logs
+            modelBuilder.Entity<Log>().HasOne(item => item.User).WithMany(item => item.Logs).HasForeignKey(item => item.Username);
+
+            /* CONTENT */
 
             // Tags
             modelBuilder.Entity<Tag>().HasIndex("Name");
@@ -41,25 +54,25 @@ namespace MatioCMS.Admin.Includes
             modelBuilder.Entity<Category>().Property("Name").IsUnicode(false);
             modelBuilder.Entity<Category>().HasOne(item => item.Parent).WithMany(item => item.Children).HasForeignKey(item => item.ParentID);
 
-            // Plugins
-            modelBuilder.Entity<Plugin>().Property("Name").IsUnicode(false);
-
-            // Themes
-            modelBuilder.Entity<Theme>().Property("Name").IsUnicode(false);
-
             // Widgets
             modelBuilder.Entity<Widget>().Property("WidgetName").IsUnicode(false);
             modelBuilder.Entity<Widget>().Property("AreaName").IsUnicode(false);
 
-            // Logs
-            modelBuilder.Entity<Log>().Property("Username").IsUnicode(false);
-            modelBuilder.Entity<Log>().Property("ObjectType").IsUnicode(false);
-            modelBuilder.Entity<Log>().Property("Action").IsUnicode(false);
-            modelBuilder.Entity<Log>().HasOne(item => item.User).WithMany(item => item.Logs).HasForeignKey(item => item.Username);
+            // Menus
+            modelBuilder.Entity<Menu>().Property("Name").IsUnicode(false);
+            modelBuilder.Entity<Menu>().Property("AreaName").IsUnicode(false);
+
+            // Links
+            modelBuilder.Entity<Link>().Property("URL").IsUnicode(false);
+
+            // Snippets
+            modelBuilder.Entity<Snippet>().Property("Platform").IsUnicode(false);
+            modelBuilder.Entity<Snippet>().Property("ObjectType").IsUnicode(false);
 
             // Gallery
+            modelBuilder.Entity<Gallery>().Property("Path").IsUnicode(false);
             modelBuilder.Entity<Gallery>().Property("Extension").IsUnicode(false);
-            modelBuilder.Entity<Gallery>().HasOne(item => item.Author).WithMany(item => item.AddedGalleryItems).HasForeignKey(item=> item.AuthorUsername);
+            modelBuilder.Entity<Gallery>().HasOne(item => item.Author).WithMany(item => item.AddedGalleryItems).HasForeignKey(item => item.AuthorUsername);
 
             // Page
             modelBuilder.Entity<Page>().Property("Name").IsUnicode(false);
@@ -67,9 +80,7 @@ namespace MatioCMS.Admin.Includes
 
             // Page Changes
             modelBuilder.Entity<PageChange>().HasOne(item => item.EditedBy).WithMany(item => item.PageChanges).HasForeignKey(item=> item.EditedBy_Username);
-            modelBuilder.Entity<PageChange>().HasOne(item => item.Page).WithMany(item => item.Changes).HasForeignKey(item=> item.PageID);
-
-            
+            modelBuilder.Entity<PageChange>().HasOne(item => item.Page).WithMany(item => item.Changes).HasForeignKey(item => item.PageID);
         }
 
         #region Tables

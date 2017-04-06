@@ -21,15 +21,17 @@ namespace MatioCMS.Admin.Includes
 
     public enum Actions { Default, Add, Delete, Edit, Personalize, Publish, Install }
 
+    /* Models only for admins */
+
     namespace Models
     {
-        #region Primary Configuration
+        #region Configuration
             [Table("Admins")]
             public class Admin
             {
                 [Key, Required, StringLength(35, MinimumLength = 5)]
                 public string Username { get; set; }
-                [Required, RegularExpression("^[0-9A-f]{64}$")]
+                [Required, RegularExpression("^[0-9A-f]{64}$"), MaxLength(64)]
                 public string Passkey { get; set; }
                 [Required, RegularExpression(@"^\w+.*"), MaxLength(128)]
                 public string Fullname { get; set; }
@@ -41,8 +43,10 @@ namespace MatioCMS.Admin.Includes
 
                 public virtual ICollection<Log> Logs { get; set; }
                 public virtual ICollection<Gallery> AddedGalleryItems { get; set; }
-                public ICollection<Page> CreatedPages { get; set; }
+                public virtual ICollection<Page> CreatedPages { get; set; }
                 public virtual ICollection<PageChange> PageChanges { get; set; }
+                public virtual ICollection<Post> CreatedPosts { get; set; }
+                public virtual ICollection<PostChanges> PostChanges { get; set; }
             }
 
             [Table("Sessions")]
@@ -56,21 +60,21 @@ namespace MatioCMS.Admin.Includes
 
             [Table("Logs")]
             public class Log
-        {
-            [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-            public int ID { get; set; }
-            [Required]
-            public string Username { get; set; }
-            [DataType(DataType.DateTime)]
-            public DateTime ActionDate { get; set; } = DateTime.UtcNow;
-            [Required, EnumDataType(typeof(ObjectTypes))]
-            public string ObjectType { get; set; }
-            [Required, EnumDataType(typeof(Action))]
-            public string Action { get; set; }
-            public string Description { get; set; }
+            {
+                [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+                public int ID { get; set; }
+                [Required]
+                public string Username { get; set; }
+                [DataType(DataType.DateTime)]
+                public DateTime ActionDate { get; set; } = DateTime.UtcNow;
+                [Required, EnumDataType(typeof(ObjectTypes))]
+                public string ObjectType { get; set; }
+                [Required, EnumDataType(typeof(Actions))]
+                public string Action { get; set; }
+                public string Description { get; set; }
 
-            public Admin User { get; set; }
-        }
+                public virtual Admin User { get; set; }
+            }
 
             [Table("Statistics")]
             public class Stat
@@ -100,7 +104,7 @@ namespace MatioCMS.Admin.Includes
                 [Range(0, long.MaxValue), DefaultValue(0)]
                 public long Views { get; set; }
 
-                public Admin CreatedBy { get; set; }
+                public virtual Admin CreatedBy { get; set; }
                 public virtual ICollection<PageChange> Changes { get; set; }
             }
 
@@ -122,8 +126,8 @@ namespace MatioCMS.Admin.Includes
                 public bool IsPublished { get; set; }
                 public DateTime PublishDate { get; set; } = DateTime.UtcNow;
 
-                public Admin EditedBy { get; set; }
-                public Page Page { get; set; }
+                public virtual Admin EditedBy { get; set; }
+                public virtual Page Page { get; set; }
             }
 
             [Table("Post")]
@@ -169,13 +173,6 @@ namespace MatioCMS.Admin.Includes
                 public virtual Post Post { get; set; }
             }
         #endregion
-
-
-
-
-
-
-
     }
 
 }

@@ -35,11 +35,4 @@ namespace MatioCMS
         }
         #endregion
     }
-
-    public class Config
-    {
-        [Key, Required, MaxLength(35)]
-        public string Name { get; set; }
-        public string Value { get; set; }
-    }
 }

@@ -34,20 +34,25 @@ namespace MatioCMS.Database
         {
             modelBuilder.HasDefaultSchema("matiocms");
 
-            // Readonly data
+            // VIEWS
             modelBuilder.Ignore<PublishedPage>();
             modelBuilder.Ignore<PublishedPost>();
 
+            /* CONFIGURATION */
+
             // Config
             modelBuilder.Entity<Config>().Property("Name").IsUnicode(false);
-            modelBuilder.Entity<Config>().Property("Value").IsUnicode(false);
 
             // Admins
             modelBuilder.Entity<Includes.Models.Admin>().Property("Username").IsUnicode(false);
 
-            // Errors
-            modelBuilder.Entity<Error>().Property("ExceptionName").IsUnicode(false);
-            modelBuilder.Entity<Error>().Property("Filename").IsUnicode(false);
+            // Plugins
+            modelBuilder.Entity<Plugin>().Property("Name").IsUnicode(false);
+
+            // Themes
+            modelBuilder.Entity<Theme>().Property("Name").IsUnicode(false);
+
+            /* CONTENT */
 
             // Tags
             modelBuilder.Entity<Tag>().HasIndex("Name");
@@ -57,12 +62,6 @@ namespace MatioCMS.Database
             modelBuilder.Entity<Category>().HasIndex("Name");
             modelBuilder.Entity<Category>().Property("Name").IsUnicode(false);
             modelBuilder.Entity<Category>().HasOne(item => item.Parent).WithMany(item => item.Children).HasForeignKey(item => item.ParentID);
-
-            // Plugins
-            modelBuilder.Entity<Plugin>().Property("Name").IsUnicode(false);
-
-            // Themes
-            modelBuilder.Entity<Theme>().Property("Name").IsUnicode(false);
 
             // Widgets
             modelBuilder.Entity<Widget>().Property("WidgetName").IsUnicode(false);
@@ -75,18 +74,22 @@ namespace MatioCMS.Database
             // Links
             modelBuilder.Entity<Link>().Property("URL").IsUnicode(false);
 
+            // Snippets
+            modelBuilder.Entity<Snippet>().Property("Platform").IsUnicode(false);
+            modelBuilder.Entity<Snippet>().Property("ObjectType").IsUnicode(false);
+
             // Gallery
+            modelBuilder.Entity<Gallery>().Property("Path").IsUnicode(false);
             modelBuilder.Entity<Gallery>().Property("Extension").IsUnicode(false);
-            modelBuilder.Entity<Gallery>().Property("AuthorUsername").IsUnicode(false);
             modelBuilder.Entity<Gallery>().HasOne(item => item.Author).WithMany(item => item.AddedGalleryItems).HasForeignKey(item => item.AuthorUsername);
         }
 
         #region Tables
             #region Configuration
-                public IEnumerable<Includes.Models.Admin> Admins { get; set; }
-                public IEnumerable<Config> Config { get; set; }
-                public IEnumerable<Plugin> Plugins { get; set; }
-                public IEnumerable<Theme> Themes { get; set; }
+                public IQueryable<Includes.Models.Admin> Admins { get; set; }
+                public IQueryable<Config> Config { get; set; }
+                public IQueryable<Plugin> Plugins { get; set; }
+                public IQueryable<Theme> Themes { get; set; }
             #endregion
 
             #region Content
