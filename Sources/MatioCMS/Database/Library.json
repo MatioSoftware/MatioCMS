@@ -1,0 +1,53 @@
+﻿{
+  "$schema": "/Includes/Schemas/json/library-schema.json",
+  "Styles": [
+    {
+      "Name": "angular",
+      "Paths": [ "/includes/lib/angular/angular-csp.css" ]
+    },
+    {
+      "Name": "bootstrap",
+      "Paths": [
+        "/includes/lib/bootstrap/css/bootstrap.min.css",
+        "/includes/lib/bootstrap/css/bootstrap-theme.min.css"
+      ]
+    },
+    {
+      "Name": "jquery-mobile",
+      "Paths": [
+        "/includes/lib/jquery-mobile/jquery-mobile-theme.min.css",
+        "/includes/lib/jquery-mobile/jquery-mobile-structure.min.css"
+      ]
+    },
+    {
+      "Name": "jquery-ui",
+      "Paths": [
+        "/includes/lib/jquery-ui/jquery-ui.min.css",
+        "/includes/lib/jquery-ui/jquery-ui-theme.min.css",
+        "/includes/lib/jquery-ui/jquery-ui-structure.min.css"
+      ]
+    }
+  ],
+  "Scripts": [
+    {
+      "Name": "jquery",
+      "Paths": [ "/includes/lib/jquery.min.js" ]
+    },
+    {
+      "Name": "jquery-ui",
+      "Paths": [ "/includes/lib/jquery-ui/jquery-ui.min.js" ]
+    },
+    {
+      "Name": "jquery-mobile",
+      "Paths": [ "/includes/lib/jquery-mobile/jquery-mobile.min.js" ]
+    },
+    {
+      "Name": "bootstrap",
+      "Paths": [ "/includes/lib/bootstrap/bootstrap.min.js" ]
+    },
+    {
+      "Name": "angular",
+      "Paths": [ "/includes/lib/angular/angular.min.js" ]
+    }
+  ]
+}

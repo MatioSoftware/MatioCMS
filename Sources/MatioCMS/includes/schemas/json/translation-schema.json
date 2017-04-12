@@ -1,0 +1,70 @@
+﻿{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "Translation Schema",
+    "type": "object",
+    "properties": {
+        "Titles": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "Zone": { "type": "string" },
+                    "Items": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "Language": {
+                                        "type": "string",
+                                        "minLength": 2,
+                                        "maxLength": 2,
+                                        "enum": [ "en", "pl" ]
+                                    },
+                                    "Value": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["Language", "Value"]
+                            }
+                        }
+                    }
+                },
+                "required": [ "Zone", "Items" ]
+            }
+        },
+        "Messages": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "Zone": { "type": "string" },
+                    "Items": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "Language": {
+                                        "type": "string",
+                                        "minLength": 2,
+                                        "maxLength": 2,
+                                        "enum": ["en", "pl"]
+                                    },
+                                    "Value": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [ "Language", "Value" ]
+                            }
+                        }
+                    }
+                },
+                "required": [ "Zone", "Items" ]
+            }
+        }
+    },
+    "required": [ "Titles", "Messages" ]
+}
